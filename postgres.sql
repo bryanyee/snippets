@@ -12,7 +12,7 @@ FROM users;
 
 -- Dig into json values
 SELECT
-    items.config::jsoin->>'description' AS item_description,
+    items.config::json->>'description' AS item_description,
     CAST (items.config::json->>'identifier' AS INTEGER) AS item_id
 FROM items;
 
