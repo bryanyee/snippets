@@ -40,7 +40,7 @@ WHERE members.category = 'premium'
 ORDER BY users.created_at DESC;
 
 
--- Aggregate functions and grouping
+-- Grouping, aggregate functions, and querying data on a single item from a 1-to-many relationship
 SELECT
     order.id AS order_id,
     order.created_at AS order_date,
@@ -59,3 +59,14 @@ JOIN line_items ON orders.id = line_items.order_id
 JOIN items ON line_items.item_id = items.id
 GROUP BY orders.id, -- unique row for every order, with aggregate calculations on line_items and items
 HAVING orders.customer_id = 100;
+
+
+-- Joining a table multiple times
+select
+    users.id as user_id,
+    COUNT(incomplete_tasks) as incomplete_task_count,
+    COUNT(complete_tasks) as complete_task_count
+from users
+left join tasks as incomplete_tasks on users.id = tasks.user_id AND tasks.state IN ('created', 'started')
+left join tasks as complete_tasks on users.id = tasks.user_id AND tasks.state = 'complete'
+group by users.id;
