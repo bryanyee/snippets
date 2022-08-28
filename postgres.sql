@@ -40,7 +40,7 @@ WHERE members.category = 'premium'
 ORDER BY users.created_at DESC;
 
 
--- Grouping, aggregate functions, and querying data on a single item from a 1-to-many relationship
+-- Grouping, aggregate functions, and querying data on a single item from a 1-to-many relationship using a correlated subquery
 SELECT
     order.id AS order_id,
     order.created_at AS order_date,
