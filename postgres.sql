@@ -47,6 +47,16 @@ GROUP BY user_id, category_id
 HAVING COUNT(*) > 1;
 
 
+-- Count the results of another query
+SELECT COUNT(*)
+FROM (
+  SELECT user_id, category_id, COUNT(*)
+  FROM favorited_items
+  GROUP BY user_id, category_id
+  HAVING COUNT(*) > 1;
+) AS RESULTS;
+
+
 -- Grouping, aggregate functions, and querying data on a single item from a 1-to-many relationship using a correlated subquery
 SELECT
     order.id AS order_id,
