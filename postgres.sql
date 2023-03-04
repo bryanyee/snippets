@@ -40,6 +40,13 @@ WHERE members.category = 'premium'
 ORDER BY users.created_at DESC;
 
 
+-- Group by multiple fields
+SELECT user_id, category_id, COUNT(*)
+FROM favorited_items
+GROUP BY user_id, category_id
+HAVING COUNT(*) > 1;
+
+
 -- Grouping, aggregate functions, and querying data on a single item from a 1-to-many relationship using a correlated subquery
 SELECT
     order.id AS order_id,
@@ -62,11 +69,11 @@ HAVING orders.customer_id = 100;
 
 
 -- Joining a table multiple times
-select
-    users.id as user_id,
-    COUNT(incomplete_tasks) as incomplete_task_count,
-    COUNT(complete_tasks) as complete_task_count
-from users
-left join tasks as incomplete_tasks on users.id = tasks.user_id AND tasks.state IN ('created', 'started')
-left join tasks as complete_tasks on users.id = tasks.user_id AND tasks.state = 'complete'
-group by users.id;
+SELECT
+    users.id AS user_id,
+    COUNT(incomplete_tasks) AS incomplete_task_count,
+    COUNT(complete_tasks) AS complete_task_count
+FROM users
+left JOIN tasks AS incomplete_tasks ON users.id = tasks.user_id AND tasks.state IN ('created', 'started')
+left JOIN tasks AS complete_tasks ON users.id = tasks.user_id AND tasks.state = 'complete'
+GROUP BY users.id;
